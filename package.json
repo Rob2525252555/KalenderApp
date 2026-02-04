@@ -1,0 +1,14 @@
+{
+  "name": "kalenderapp",
+  "version": "1.0.0",
+  "description": "Vanilla JavaScript Kalender SPA",
+  "private":"true",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  }
+}

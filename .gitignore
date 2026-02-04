@@ -1,0 +1,6 @@
+# Node Modules
+node_modules/
+
+#Alles im data-ordner ignorieren
+data/*
+!data/.gitkeep
