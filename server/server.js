@@ -5,7 +5,7 @@ import 'dotenv/config';
 import { fileURLToPath } from 'url';
 import crypto from 'crypto';
 
-// Dateipfad ermitteln zum Speicherort der Daten
+// --- Pfad zur JSON-Datei ermitteln ---
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_TASKS_PATH = path.join(__dirname, '../data/tasks.json');
@@ -13,21 +13,25 @@ const DATA_TASKS_PATH = path.join(__dirname, '../data/tasks.json');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// JSON-Middleware
+// --- Middleware ---
+// JSON Body parsen
 app.use(express.json());
-
-// Middleware für Formulardaten
+// Formulardaten parsen (x-www-urlencoded)
 app.use(express.urlencoded({ extended: true }));
-
-// Statische Dateien ausliefern (z.B. HTML, CSS, JS aus dem Ordner 'public')
+// Statische Dateien ausliefern (HTML, CSS, JS aus dem Ordner 'public')
 app.use(express.static(path.resolve('public')));
 
-// GET tasks------------------------------------------------------------------------------------
+/**
+ * GET /api/tasks
+ * Liefert alles Tasks zurück
+ * Antwort: Liefert Array von JavaScript Objekten
+ */
 app.get('/api/tasks', async (req, res) => {
   try {
+
     // JSON-Datei lesen
     const jsonData = await fs.promises.readFile(DATA_TASKS_PATH, 'utf-8');
-    const tasks = JSON.parse(jsonData);
+    let tasks = JSON.parse(jsonData);
 
     res.json(tasks);
   } catch (err) {
@@ -35,20 +39,25 @@ app.get('/api/tasks', async (req, res) => {
   }
 });
 
-// GET einzelne Task--------------------------------------------------------
+/**
+ * GET /api/tasks/:id
+ * Liefert einzelne Task anhand der ID
+ * Antwort: Liefert das gesuchte Objekt
+ */
 app.get('/api/tasks/:id', async (req, res) => {
   try {
     // JSON-Datei lesen
     const jsonData = await fs.promises.readFile(DATA_TASKS_PATH, 'utf8');
     const tasks = JSON.parse(jsonData);
 
+    // Einzelne Task andhand ID finden
     const task = tasks.find(t => t.id === req.params.id);
 
     if (!task) {
       return res.status(404).json({ error: 'Aufgabe nicht gefunden' });
     }
 
-    // Gefundene Task zurückgeben
+    
     res.json(task);
 
   } catch (err) {
@@ -57,7 +66,12 @@ app.get('/api/tasks/:id', async (req, res) => {
   }
 });
 
-// POST tasks-------------------------------------------------------------------------------------
+/**
+ * POST /api/tasks
+ * Fügt eine neue Task hinzu
+ * Body: {title, employee, startDate, endDate, description}
+ * Antwort: Liefert das neue Task Objekt
+ */
 app.post('/api/tasks', async (req, res) => {
   try {
     const { title, employee, startDate, endDate, description } = req.body;
@@ -98,7 +112,12 @@ app.post('/api/tasks', async (req, res) => {
   }
 });
 
-// PUT tasks---------------------------------------------------------------------------
+/**
+ * PUT /api/tasks/:id
+ * Aktualisiert eine bestehende Task
+ * Body {title, employee, startDate, endDate, description}
+ * Antwort: Liefert das veränderte Objekt
+ */
 app.put('/api/tasks/:id', async (req, res) => {
   try {
     const { title, employee, startDate, endDate, description } = req.body;
@@ -145,7 +164,11 @@ app.put('/api/tasks/:id', async (req, res) => {
   }
 });
 
-// DELETE tasks----------------------------------------------------------------------------------------------------
+/**
+ * DELETE /api/tasks/:id
+ * Löscht eine Task anhand der ID
+ * Antwort: Liefert das gelöschte Objekt
+ */
 app.delete('/api/tasks/:id', async (req, res) => {
   try {
     // JSON-Datei lesen
@@ -175,6 +198,7 @@ app.delete('/api/tasks/:id', async (req, res) => {
   }
 });
 
+// Server starten
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
 });
