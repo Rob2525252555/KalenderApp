@@ -9,6 +9,8 @@
   --task-employee-font: rgba(85, 85, 85, 1);           /* Dunkelgrau für Mitarbeitertext */
   --task-endDate-bg: rgba(255, 97, 97, 1);             /* Blasses Rot für Tasks am Enddatum */
   --task-endDate-bg-hover: rgba(248, 29, 29,1);        /* Intensiveres Rot beim Hover */
+  --task-taskButtons-bg: rgba(220,220,220,1);          /* Hellgrau für Task-Buttons */
+  --task-taskButtons-bg-hover: rgba(200,200,200,1);    /* Dunkleres Hellgrau beim Hover */
 }
 
 /* Container für jede Task */
@@ -40,6 +42,14 @@
     padding: 2px 4px;
     font-size: 12px;
     cursor: pointer;
+    background-color: var(--task-taskButtons-bg);
+    border: none;
+
+    transition: background-color 0.2s ease;
+}
+
+.task__buttons button:hover {
+    background-color: var(--task-taskButtons-bg-hover);
 }
 
 .task__title {
