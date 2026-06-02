@@ -2,6 +2,14 @@
 
 Eine webbasierte Full-Stack Kalenderanwendung zur Verwaltung von Aufgaben mit REST-API und dynamischer Kalenderansicht.
 
+## Hinweis zur Live-Demo
+
+Die Anwendung wird auf Render gehostet. Beim ersten Aufruf kann das Laden einige Sekunden dauern, da sich der Server zunächst im Sleep-Modus befindet.
+
+## Live-Demo
+
+https://kalender-app.onrender.com
+
 ## Screenshots
 
 ### Kalenderansicht
@@ -113,7 +121,7 @@ server/
 - Feature-basierte Ordnerstruktur
 - Zentrales State-Management und zentrale Verwaltung von DOM-Referenzen
 - Wiederverwendbares Modal-System
-- Toasts für Benachrichtigungen für Feedback (Success, Error, Info)
+- Toast-Benachrichtigungen für Feedback (Success, Error, Info)
 - Event Delegation für dynamisch erzeugte Buttons
 - REST-API mit Express.js
 - Schutz vor Race Conditions durch serielle Schreiboperationen
